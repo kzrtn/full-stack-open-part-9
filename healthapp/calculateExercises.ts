@@ -8,7 +8,7 @@ interface exerciseResults {
   ratingDescription: string
 }
 
-const dailyExerciseHours: number[] = [3, 0, 2, 4.5, 0, 3, 1];
+//const dailyExerciseHours: number[] = [3, 0, 2, 4.5, 0, 3, 1];
 
 interface inputValues {
   target: number;
