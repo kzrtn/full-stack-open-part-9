@@ -1,4 +1,5 @@
 import express from 'express';
+import { calculateBmi } from './bmiCalculator.ts';
 
 const app = express();
 
@@ -8,9 +9,15 @@ app.get('/hello', (_req, res) => {
 
 app.get('/bmi', (req, res) => {
   const {height, weight} = req.query;
-  if (!height || !weight) throw new Error('invalid parameter given')
-  console.log(height, weight)
-  res.send('ok');
+
+  if (isNaN(Number(height)) || isNaN(Number(weight)) || !height || !weight)
+    throw new Error('invalid parameter given, should be a number');
+  
+  res.json({
+    height: Number(height),
+    weight: Number(weight),
+    bmi: calculateBmi(Number(height), (Number(weight)))
+  });
 })
 
 const PORT = 3003;
