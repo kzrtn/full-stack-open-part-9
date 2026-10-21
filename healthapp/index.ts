@@ -13,7 +13,9 @@ app.get('/bmi', (req, res) => {
   const {height, weight} = req.query;
 
   if (isNaN(Number(height)) || isNaN(Number(weight)) || !height || !weight)
-    throw new Error('invalid parameter given, should be a number');
+    res.status(400).json({
+      error: 'malformatted parameters'
+    });
   
   res.json({
     height: Number(height),
@@ -26,15 +28,15 @@ app.post('/exercises', (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { daily_exercises, target } = req.body;
 
-  if (!target || isNaN(Number(target))) {
+  if (!target || !daily_exercises) {
     res.status(400).json({
-      error: "target parameter missing or malformed"
+      error: "parameters missing"
     });
   }
 
-  if (!daily_exercises || !Array.isArray(daily_exercises) || daily_exercises.some(item => typeof item !== 'number')) {
+  if (isNaN(Number(target)) || !Array.isArray(daily_exercises) || daily_exercises.some(item => typeof item !== 'number')) {
     res.status(400).json({
-      error: "daily_exercises parameter missing or malformed"
+      error: "malformatted parameters"
     });
   }
 
