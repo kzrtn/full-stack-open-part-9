@@ -3,13 +3,13 @@ export const calculateBmi = (heightInCm: number, weightInKg: number):string => {
   if (bmi < 18.5) {
     return `Underweight range`;
   } else if (bmi < 22.9 && bmi > 18.5) {
-    return "Normal range"
+    return "Normal range";
   } else if (bmi < 27.4 && bmi > 23.0) {
-    return "Overweight range"
+    return "Overweight range";
   } else {
-    return "Obese range"
+    return "Obese range";
   }
-}
+};
 
 if (process.argv[1] === import.meta.filename) {
   interface Values {
@@ -24,8 +24,8 @@ if (process.argv[1] === import.meta.filename) {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
-  }
+    };
+  };
 
   try {
     const {height, weight} = processArgv(process.argv);
@@ -35,6 +35,6 @@ if (process.argv[1] === import.meta.filename) {
     if (error instanceof Error) {
       errorMessage += error.message;
     }
-    console.log(errorMessage)
+    console.log(errorMessage);
   }
 }

@@ -19,10 +19,10 @@ const processArgs = (args: string[]):inputValues => {
   if (args.length < 3) throw new Error("Not enough arguments.");
   if (args.length > 17) throw new Error("Too many arguments.");
 
-  let cleanedArgs: number[] = [];
+  const cleanedArgs: number[] = [];
   let target: number = 0;
   for (let i = 2; i < args.length; i++) {
-    if(isNaN(Number(args[i]))) throw new Error("One of the arguments is not a number.")
+    if(isNaN(Number(args[i]))) throw new Error("One of the arguments is not a number.");
     if(i > 2) {
       cleanedArgs.push(Number(args[i]));
     } else {
@@ -32,8 +32,8 @@ const processArgs = (args: string[]):inputValues => {
   return {
     target,
     exerciseHours: cleanedArgs
-  }
-}
+  };
+};
 
 const calculateExercise = (target: number, exerciseHours: number[]): exerciseResults => {
   const periodLength: number = exerciseHours.length;
@@ -45,13 +45,13 @@ const calculateExercise = (target: number, exerciseHours: number[]): exerciseRes
   
   if (average > target + 1) {
     rating = 3;
-    ratingDescription = "Outstanding! You've beat your target by a wide margin!"
+    ratingDescription = "Outstanding! You've beat your target by a wide margin!";
   } else if (average >= target && average < target + 1) {
     rating = 2;
     ratingDescription = "Good job, you've hit your target!";
   } else {
     rating = 1;
-    ratingDescription = "You didn't hit your target, better luck next time."
+    ratingDescription = "You didn't hit your target, better luck next time.";
   }
 
   return {
@@ -62,8 +62,8 @@ const calculateExercise = (target: number, exerciseHours: number[]): exerciseRes
     success,
     rating,
     ratingDescription
-  }
-}
+  };
+};
 
 try {
   const {target, exerciseHours} = processArgs(process.argv);
@@ -73,5 +73,5 @@ try {
   if (error instanceof Error) {
     errorMessage += error.message;
   }
-  console.log(errorMessage)
+  console.log(errorMessage);
 }
