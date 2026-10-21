@@ -1,41 +1,4 @@
-interface exerciseResults {
-  periodLength: number,
-  trainingDays: number,
-  target: number,
-  average: number,
-  success: boolean,
-  rating: number,
-  ratingDescription: string
-}
-
-//const dailyExerciseHours: number[] = [3, 0, 2, 4.5, 0, 3, 1];
-
-interface inputValues {
-  target: number;
-  exerciseHours: number[];
-}
-
-const processArgs = (args: string[]):inputValues => {
-  if (args.length < 3) throw new Error("Not enough arguments.");
-  if (args.length > 17) throw new Error("Too many arguments.");
-
-  const cleanedArgs: number[] = [];
-  let target: number = 0;
-  for (let i = 2; i < args.length; i++) {
-    if(isNaN(Number(args[i]))) throw new Error("One of the arguments is not a number.");
-    if(i > 2) {
-      cleanedArgs.push(Number(args[i]));
-    } else {
-      target = Number(args[i]);
-    }
-  }
-  return {
-    target,
-    exerciseHours: cleanedArgs
-  };
-};
-
-const calculateExercise = (target: number, exerciseHours: number[]): exerciseResults => {
+export const calculateExercise = (target: number, exerciseHours: number[]): exerciseResults => {
   const periodLength: number = exerciseHours.length;
   const trainingDays: number = exerciseHours.filter(el => el > 0).length;
   const average: number = exerciseHours.reduce((accumulator: number, current: number) => accumulator + current, 0) / periodLength;
@@ -65,13 +28,52 @@ const calculateExercise = (target: number, exerciseHours: number[]): exerciseRes
   };
 };
 
-try {
-  const {target, exerciseHours} = processArgs(process.argv);
-  console.log(calculateExercise(target, exerciseHours));
-} catch (error: unknown) {
-  let errorMessage: string = "Error occurred. ";
-  if (error instanceof Error) {
-    errorMessage += error.message;
+interface exerciseResults {
+  periodLength: number,
+  trainingDays: number,
+  success: boolean,
+  rating: number,
+  ratingDescription: string,
+  target: number,
+  average: number,
+}
+
+//const dailyExerciseHours: number[] = [3, 0, 2, 4.5, 0, 3, 1];
+
+if (process.argv[1] === import.meta.filename) {
+  interface inputValues {
+    target: number;
+    exerciseHours: number[];
   }
-  console.log(errorMessage);
+
+  const processArgs = (args: string[]):inputValues => {
+    if (args.length < 3) throw new Error("Not enough arguments.");
+    if (args.length > 17) throw new Error("Too many arguments.");
+
+    const cleanedArgs: number[] = [];
+    let target: number = 0;
+    for (let i = 2; i < args.length; i++) {
+      if(isNaN(Number(args[i]))) throw new Error("One of the arguments is not a number.");
+      if(i > 2) {
+        cleanedArgs.push(Number(args[i]));
+      } else {
+        target = Number(args[i]);
+      }
+    }
+    return {
+      target,
+      exerciseHours: cleanedArgs
+    };
+  };
+
+  try {
+    const {target, exerciseHours} = processArgs(process.argv);
+    console.log(calculateExercise(target, exerciseHours));
+  } catch (error: unknown) {
+    let errorMessage: string = "Error occurred. ";
+    if (error instanceof Error) {
+      errorMessage += error.message;
+    }
+    console.log(errorMessage);
+  }
 }
