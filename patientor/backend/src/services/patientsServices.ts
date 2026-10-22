@@ -1,6 +1,6 @@
 import data from '../../data/patients.ts';
 
-export interface Patient {
+interface Patient {
   id: string;
   name: string;
   occupation: string;
@@ -9,12 +9,22 @@ export interface Patient {
   dateOfBirth?: string;
 };
 
+export type NonSensitivePatient = Omit<Patient, 'ssn'>;
+
 enum Gender {
   Male = "male",
   Female = "female",
   Other = "other"
 };
 
-export const allPatients = (): Patient[] => {
-  return data as Patient[]
+export const allPatients = (): NonSensitivePatient[] => {
+  const omittedData = data.map(({id, name, occupation, gender, dateOfBirth}) => ({
+    id,
+    name,
+    occupation,
+    gender,
+    dateOfBirth
+  }));
+  
+  return omittedData as NonSensitivePatient[]
 }
