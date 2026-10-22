@@ -7,5 +7,5 @@ export interface Diagnosis {
 };
 
 export const allDiagnoses = (): Diagnosis[] => {
-  return data as Diagnosis[]
-}
+  return data;
+};
