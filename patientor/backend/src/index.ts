@@ -1,5 +1,5 @@
 import express from 'express';
-import patientsRouter from './controllers/patients.ts';
+import patientsRouter from './routes/patients.ts';
 const app = express();
 app.use(express.json());
 
