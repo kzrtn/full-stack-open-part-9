@@ -12,4 +12,11 @@ export default defineConfig({
     baseURL: 'http://localhost:3001',
     trace: 'on-first-retry',
   },
+  webServer: {
+    command: 'npm run dev',
+    cwd: '../patientor/backend', // adjust to your backend folder
+    url: 'http://localhost:3001/api/ping',
+    reuseExistingServer: true,
+    timeout: 60_000,
+  },
 });
