@@ -18,7 +18,7 @@ patientsRouter.post('/patients', (req, res) => {
   try {
     const {name, occupation, gender, ssn, dateOfBirth} = req.body;
     const newPatient = {
-      id: Math.random(),
+      id: Math.random().toString(),
       ...parseNewPatient({
         name,
         occupation,
