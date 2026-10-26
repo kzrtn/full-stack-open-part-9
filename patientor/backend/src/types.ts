@@ -17,7 +17,7 @@ export const NewPatientSchema = z.object({
 export type NewPatient = z.infer<typeof NewPatientSchema>;
 
 export interface Patient extends NewPatient {
-  id: number;
+  id: string;
 }
 
 export type NonSensitivePatient = Omit<Patient, 'ssn'>;
