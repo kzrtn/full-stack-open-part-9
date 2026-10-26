@@ -1,5 +1,7 @@
 import express from 'express';
+import { z } from 'zod';
 import { allPatients } from '../services/patientsServices.ts';
+import { parseNewPatient } from '../utils/utils.ts';
 const patientsRouter = express.Router();
 const allPatientsData = allPatients();
 
@@ -13,17 +15,27 @@ patientsRouter.get('/patients', (_req, res) => {
 });
 
 patientsRouter.post('/patients', (req, res) => {
-  const {name, occupation, gender, ssn, dateOfBirth} = req.body;
-  const newPatient = {
-    id: crypto.randomUUID(),
-    name,
-    occupation,
-    gender,
-    ssn,
-    dateOfBirth
-  };
-  allPatientsData.push(newPatient);
-  res.json(newPatient);
+  try {
+    const {name, occupation, gender, ssn, dateOfBirth} = req.body;
+    const newPatient = {
+      id: Math.random(),
+      ...parseNewPatient({
+        name,
+        occupation,
+        gender,
+        ssn,
+        dateOfBirth
+      })
+    };
+    allPatientsData.push(newPatient);
+    res.json(newPatient);
+  } catch (error: unknown) {
+    if (error instanceof z.ZodError) {
+      res.status(400).send({ error: error.issues });
+    } else {
+      res.status(400).send({ error: 'unknown error' }); 
+    }
+  }
 });
 
 export default patientsRouter;
