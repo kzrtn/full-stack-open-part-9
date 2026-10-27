@@ -7,8 +7,11 @@ interface CoursePartBase {
   exerciseCount: number;
 }
 
-interface CoursePartBasic extends CoursePartBase {
+interface CoursePartBaseDesc extends CoursePartBase {
   description: string;
+}
+
+interface CoursePartBasic extends CoursePartBaseDesc {
   kind: "basic";
 }
 
@@ -17,8 +20,7 @@ interface CoursePartGroup extends CoursePartBase {
   kind: "group";
 }
 
-interface CoursePartBackground extends CoursePartBase {
-  description: string;
+interface CoursePartBackground extends CoursePartBaseDesc {
   backgroundMaterial: string;
   kind: "background";
 }
