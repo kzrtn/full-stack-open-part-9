@@ -1,11 +1,7 @@
-import { type CoursePart } from './Course';
+import { type CoursePart } from '../App';
 import Course from './Course';
 
-export interface ContentProps {
-  courseParts: CoursePart[];
-}
-
-const Content = ({courseParts}: ContentProps) => {
+const Content = ({courseParts}: { courseParts: CoursePart[] }) => {
   return courseParts.map(course => (
     <Course course={course} key={course.name} />
   ))
