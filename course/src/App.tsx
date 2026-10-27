@@ -25,7 +25,12 @@ interface CoursePartBackground extends CoursePartBaseDesc {
   kind: "background";
 }
 
-export type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground;
+interface CoursePartRequire extends CoursePartBaseDesc {
+  requirements: string[];
+  kind: "special";
+}
+
+export type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground | CoursePartRequire;
 
 const courseParts: CoursePart[] = [
   {
@@ -59,6 +64,13 @@ const courseParts: CoursePart[] = [
     description: "a hard part",
     kind: "basic",
   },
+  {
+    name: "Backend development",
+    exerciseCount: 21,
+    description: "Typing the backend",
+    requirements: ["nodejs", "jest"],
+    kind: "special"
+  }
 ];
 
 

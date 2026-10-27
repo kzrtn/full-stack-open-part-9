@@ -10,13 +10,16 @@ const Part = ({part}: {part: CoursePart}) => {
 
   switch(part.kind) {
     case "basic":
-      display = <div>{part.description}</div>;
+      display = <div><i>{part.description}</i></div>;
       break;
     case "group":
       display = <div>project exercises {part.groupProjectCount}</div>;
       break;
     case "background":
-      display = <><div>{part.description}</div><div>{part.backgroundMaterial}</div></>;
+      display = <><div><i>{part.description}</i></div><div>{part.backgroundMaterial}</div></>;
+      break;
+    case "special":
+      display = <><div><i>{part.description}</i></div><div>required skills: {part.requirements.map((skill, i) => i+1 < part.requirements.length ? `${skill}, ` : skill)}</div></>
       break;
     default:
       return assertNever(part);
