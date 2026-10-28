@@ -1,15 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
-type Weather = 'sunny' | 'rainy' | 'cloudy' | 'windy';
-type visibility = 'poor' | 'good';
-
-interface Diaries {
-  id: string;
-  date: string;
-  weather: Weather;
-  visibility: visibility;
-};
+import type { Diaries } from './types';
+import DiaryForm from './components/DiaryForm';
 
 function App() {
   const [diaries, setDiaries] = useState<Diaries[]>([]);
@@ -22,6 +14,7 @@ function App() {
   
   return (
     <div>
+      <DiaryForm setDiaries={setDiaries} diaries={diaries} />
       <h2>Diary entries</h2>
       {diaries.map(diary => (
         <div key={diary.id}>
