@@ -1,4 +1,4 @@
-export type Weather = 'sunny' | 'rainy' | 'cloudy' | 'windy';
+export type Weather = 'sunny' | 'rainy' | 'cloudy' | 'windy' | 'stormy';
 export type Visibility = 'poor' | 'good';
 export interface Diary {
   id: string;

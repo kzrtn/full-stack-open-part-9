@@ -51,10 +51,29 @@ const DiaryForm = ({diaries, setDiaries, setNotif}: propsType) => {
   return (
     <div>
       <form onSubmit={submitDiary}>
-        <div><label>date <input type='text' onChange={e => setDate(e.target.value)} /></label></div>
-        <div><label>visibility <input type='text' onChange={e => setVisibility(e.target.value)} /></label></div>
-        <div><label>weather <input type='text' onChange={e => setWeather(e.target.value)} /></label></div>
-        <div><label>comment <input type='text' onChange={e => setComment(e.target.value)} /></label></div>
+        <div>
+          <label>date
+            <input type="date" onChange={e => setDate(e.target.value)} value={date} />
+          </label>
+        </div>
+        <div>
+          <label><span style={{marginRight: '10px'}}>visibility</span>
+            <label>great <input type="radio" value="great" checked={visibility==='great'} onChange={e => setVisibility(e.target.value)} /></label>
+            <label>good <input type="radio" value="good" checked={visibility==='good'} onChange={e => setVisibility(e.target.value)} /></label>
+            <label>ok <input type="radio" value="ok" checked={visibility==='ok'} onChange={e => setVisibility(e.target.value)} /></label>
+            <label>poor <input type="radio" value="poor" checked={visibility==='poor'} onChange={e => setVisibility(e.target.value)} /></label>
+          </label>
+        </div>
+        <div>
+          <label><span style={{marginRight: '10px'}}>weather</span>
+            <label>sunny <input type="radio" value="sunny" checked={weather==='sunny'} onChange={e => setWeather(e.target.value)} /></label>
+            <label>rainy <input type="radio" value="rainy" checked={weather==='rainy'} onChange={e => setWeather(e.target.value)} /></label>
+            <label>cloudy <input type="radio" value="cloudy" checked={weather==='cloudy'} onChange={e => setWeather(e.target.value)} /></label>
+            <label>stormy<input type="radio" value="stormy" checked={weather==='stormy'} onChange={e => setWeather(e.target.value)} /></label>
+            <label>windy <input type="radio" value="windy" checked={weather==='windy'} onChange={e => setWeather(e.target.value)} /></label>
+          </label>
+        </div>
+        <div><label>comment <input type='text' value={comment} onChange={e => setComment(e.target.value)} /></label></div>
         <button type='submit'>add</button>
       </form>
     </div>
