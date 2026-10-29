@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import type { NewDiary, Diaries, Weather, Visibility } from '../types';
+import type { NewDiary, Diary, Weather, Visibility } from '../types';
+import axios from 'axios';
 
-type setDiariesType = React.Dispatch<React.SetStateAction<Diaries[]>>;
+type setDiariesType = React.Dispatch<React.SetStateAction<Diary[]>>;
 
-const DiaryForm = ({diaries, setDiaries}: {diaries: Diaries[], setDiaries: setDiariesType}) => {
+const DiaryForm = ({diaries, setDiaries}: {diaries: Diary[], setDiaries: setDiariesType}) => {
   const [date, setDate] = useState('');
   const [weather, setWeather] = useState('');
   const [visibility, setVisibility] = useState('');
@@ -13,14 +14,16 @@ const DiaryForm = ({diaries, setDiaries}: {diaries: Diaries[], setDiaries: setDi
     e.preventDefault();
 
     const newDiary: NewDiary = {
-      id: Math.random().toString(),
       date,
       weather: weather as Weather,
       visibility: visibility as Visibility,
       comment
     }
 
-    setDiaries(diaries.concat(newDiary));
+    axios.post<Diary>(`/api/diaries`, newDiary).then((res) => {
+      setDiaries(diaries.concat(res.data));
+      console.log(res.data);
+    })
 
     setDate('');
     setWeather('');
