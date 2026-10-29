@@ -1,10 +1,18 @@
 import { useState } from 'react';
-import type { NewDiary, Diary, Weather, Visibility } from '../types';
+import { isAxiosError } from 'axios';
+
+import type { NewDiary, Diary, Weather, Visibility, ErrorObj } from '../types';
 import diaryService from '../services/diaryService';
 
 type setDiariesType = React.Dispatch<React.SetStateAction<Diary[]>>;
 
-const DiaryForm = ({diaries, setDiaries}: {diaries: Diary[], setDiaries: setDiariesType}) => {
+interface propsType {
+  diaries: Diary[];
+  setDiaries: setDiariesType;
+  setNotif: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const DiaryForm = ({diaries, setDiaries, setNotif}: propsType) => {
   const [date, setDate] = useState('');
   const [weather, setWeather] = useState('');
   const [visibility, setVisibility] = useState('');
@@ -22,7 +30,20 @@ const DiaryForm = ({diaries, setDiaries}: {diaries: Diary[], setDiaries: setDiar
 
     diaryService
       .create(newDiary)
-      .then(returnedDiary => setDiaries(diaries.concat(returnedDiary)));
+      .then(returnedDiary => setDiaries(diaries.concat(returnedDiary)))
+      .catch(error => {
+        let text = 'Error: ';
+        if(isAxiosError(error)) {
+          if (error.response) {
+            error.response.data.error.map((e:ErrorObj) => text = text.concat(`${e.message}. `));
+            setNotif(text);
+            setTimeout(() => setNotif(''), 5000);
+          }
+        } else {
+          setNotif(`${text} ${error}`);
+          setTimeout(() => setNotif(''), 5000);
+        }
+      })
 
     setDate('');
     setWeather('');
@@ -31,7 +52,6 @@ const DiaryForm = ({diaries, setDiaries}: {diaries: Diary[], setDiaries: setDiar
   }
   return (
     <div>
-      <h2>Add new entry</h2>
       <form onSubmit={submitDiary}>
         <div><label>date <input type='text' onChange={e => setDate(e.target.value)} /></label></div>
         <div><label>visibility <input type='text' onChange={e => setVisibility(e.target.value)} /></label></div>

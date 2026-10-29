@@ -12,3 +12,10 @@ interface FullDiary extends Diary {
 }
 
 export type NewDiary = Omit<FullDiary, 'id'>;
+
+export interface ErrorObj {
+  code: string;
+  values: any;
+  message: string;
+  length: number;
+}
