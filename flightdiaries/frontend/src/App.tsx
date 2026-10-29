@@ -13,12 +13,17 @@ function App() {
       .getAll()
       .then(returnedDiaries => setDiaries(returnedDiaries));
   }, [])
+
+  const setNotifText = (text:string) => {
+    setNotif(text);
+    setTimeout(() => setNotif(''), 5000);
+  }
   
   return (
     <div>
       <h2>Add new entry</h2>
       <Notify text={notif} />
-      <DiaryForm setDiaries={setDiaries} diaries={diaries} setNotif={setNotif} />
+      <DiaryForm setDiaries={setDiaries} diaries={diaries} setNotif={setNotifText} />
       <h2>Diary entries</h2>
       {diaries.map(diary => (
         <div key={diary.id}>

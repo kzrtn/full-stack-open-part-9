@@ -9,7 +9,7 @@ type setDiariesType = React.Dispatch<React.SetStateAction<Diary[]>>;
 interface propsType {
   diaries: Diary[];
   setDiaries: setDiariesType;
-  setNotif: React.Dispatch<React.SetStateAction<string>>;
+  setNotif: (text: string) => void;
 }
 
 const DiaryForm = ({diaries, setDiaries, setNotif}: propsType) => {
@@ -37,11 +37,9 @@ const DiaryForm = ({diaries, setDiaries, setNotif}: propsType) => {
           if (error.response) {
             error.response.data.error.map((e:ErrorObj) => text = text.concat(`${e.message}. `));
             setNotif(text);
-            setTimeout(() => setNotif(''), 5000);
           }
         } else {
           setNotif(`${text} ${error}`);
-          setTimeout(() => setNotif(''), 5000);
         }
       })
 
