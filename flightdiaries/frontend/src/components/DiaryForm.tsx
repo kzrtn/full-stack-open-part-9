@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { NewDiary, Diary, Weather, Visibility } from '../types';
-import axios from 'axios';
+import diaryService from '../services/diaryService';
 
 type setDiariesType = React.Dispatch<React.SetStateAction<Diary[]>>;
 
@@ -20,10 +20,9 @@ const DiaryForm = ({diaries, setDiaries}: {diaries: Diary[], setDiaries: setDiar
       comment
     }
 
-    axios.post<Diary>(`/api/diaries`, newDiary).then((res) => {
-      setDiaries(diaries.concat(res.data));
-      console.log(res.data);
-    })
+    diaryService
+      .create(newDiary)
+      .then(returnedDiary => setDiaries(diaries.concat(returnedDiary)));
 
     setDate('');
     setWeather('');

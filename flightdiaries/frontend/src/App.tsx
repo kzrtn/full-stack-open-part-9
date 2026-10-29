@@ -1,15 +1,15 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import type { Diary } from './types';
+import diaryService from './services/diaryService';
 import DiaryForm from './components/DiaryForm';
 
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
   useEffect(() => {
-    axios.get<Diary[]>(`/api/diaries`).then(res => {
-      setDiaries(res.data);
-    });
+    diaryService
+      .getAll()
+      .then(returnedDiaries => setDiaries(returnedDiaries));
   }, [])
   
   return (
