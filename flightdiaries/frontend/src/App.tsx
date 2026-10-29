@@ -12,12 +12,12 @@ function App() {
     diaryService
       .getAll()
       .then(returnedDiaries => setDiaries(returnedDiaries));
-  }, [])
+  }, []);
 
   const setNotifText = (text:string) => {
     setNotif(text);
     setTimeout(() => setNotif(''), 5000);
-  }
+  };
   
   return (
     <div>
@@ -33,7 +33,7 @@ function App() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

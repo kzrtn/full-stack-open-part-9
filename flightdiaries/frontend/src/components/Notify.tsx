@@ -3,7 +3,7 @@ const Notify = ({text}: {text: string}) => {
     <div style={{color: 'red'}}>
       {text}
     </div>
-  )
-}
+  );
+};
 
-export default Notify
+export default Notify;

@@ -15,7 +15,7 @@ export type NewDiary = Omit<FullDiary, 'id'>;
 
 export interface ErrorObj {
   code: string;
-  values: any;
+  values: string[];
   message: string;
   length: number;
 }

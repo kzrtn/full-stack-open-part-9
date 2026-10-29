@@ -26,7 +26,7 @@ const DiaryForm = ({diaries, setDiaries, setNotif}: propsType) => {
       weather: weather as Weather,
       visibility: visibility as Visibility,
       comment
-    }
+    };
 
     diaryService
       .create(newDiary)
@@ -41,13 +41,14 @@ const DiaryForm = ({diaries, setDiaries, setNotif}: propsType) => {
         } else {
           setNotif(`${text} ${error}`);
         }
-      })
+      });
 
     setDate('');
     setWeather('');
     setVisibility('');
     setComment('');
-  }
+  };
+
   return (
     <div>
       <form onSubmit={submitDiary}>
@@ -77,7 +78,7 @@ const DiaryForm = ({diaries, setDiaries, setNotif}: propsType) => {
         <button type='submit'>add</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default DiaryForm
+export default DiaryForm;
