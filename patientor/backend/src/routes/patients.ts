@@ -1,6 +1,6 @@
 import express from 'express';
 import { z } from 'zod';
-import { allPatients } from '../services/patientsServices.ts';
+import { allPatients, getOne } from '../services/patientsServices.ts';
 import { parseNewPatient } from '../utils/utils.ts';
 const patientsRouter = express.Router();
 const allPatientsData = allPatients();
@@ -13,6 +13,11 @@ patientsRouter.get('/ping', (_req, res) => {
 patientsRouter.get('/patients', (_req, res) => {
   res.json(allPatientsData);
 });
+
+patientsRouter.get('/patients/:id', (req, res) => {
+  const patient = getOne(req.params.id);
+  res.json(patient);
+})
 
 patientsRouter.post('/patients', (req, res) => {
   try {
