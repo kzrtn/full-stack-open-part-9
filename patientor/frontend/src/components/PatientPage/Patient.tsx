@@ -1,19 +1,18 @@
 import { useState } from "react";
 import axios from 'axios';
-import type { Patient } from "../../types";
+import type { Diagnosis, Patient } from "../../types";
 import { apiBaseUrl } from "../../constants";
 import { Typography } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import Entry from "./Entry";
 
-const PatientDetails = ({ patientId }: { patientId: string | undefined}) => {
+const PatientDetails = ({ patientId, diagnoses }: { patientId: string | undefined, diagnoses: Diagnosis[]}) => {
   const [patient, setPatient] = useState<Patient | null>(null)
 
   if (patientId && !patient) {
     axios.get(`${apiBaseUrl}/patients/${patientId}`).then(res => {
       setPatient(res.data)
-      console.log(res.data)
     });
   }
 
@@ -29,7 +28,7 @@ const PatientDetails = ({ patientId }: { patientId: string | undefined}) => {
         <div><Typography>date of birth: {patient.dateOfBirth}</Typography></div>
         <Typography sx={{ marginTop: "1.5rem", fontWeight: "bold" }}>entries</Typography>
         {patient.entries.map(entry => (
-          <Entry entry={entry} key={entry.id} />
+          <Entry entry={entry} key={entry.id} diagnoses={diagnoses} />
         ))}
       </div>
     );
