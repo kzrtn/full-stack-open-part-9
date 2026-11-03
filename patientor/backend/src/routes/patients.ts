@@ -1,9 +1,9 @@
 import express from 'express';
 import { z } from 'zod';
 import { allPatients, getOne } from '../services/patientsServices.ts';
-import { parseNewPatient } from '../utils/utils.ts';
+import { parseNewEntry, parseNewPatient } from '../utils/utils.ts';
 const patientsRouter = express.Router();
-const allPatientsData = allPatients();
+let allPatientsData = allPatients();
 
 patientsRouter.get('/ping', (_req, res) => {
   console.log('someone pinged here');
@@ -23,13 +23,14 @@ patientsRouter.post('/patients', (req, res) => {
   try {
     const {name, occupation, gender, ssn, dateOfBirth} = req.body;
     const newPatient = {
-      id: Math.random().toString(),
+      id: crypto.randomUUID().toString(),
+      entries: [],
       ...parseNewPatient({
         name,
         occupation,
         gender,
         ssn,
-        dateOfBirth
+        dateOfBirth,
       })
     };
     allPatientsData.push(newPatient);
@@ -43,22 +44,31 @@ patientsRouter.post('/patients', (req, res) => {
   }
 });
 
-export const BaseEntrySchema = z.object({
-  id: z.string(),
-  description: z.string(),
-  date: z.string(),
-  specialist: z.string(),
-  diagnosisCodes: z.array(DiagnosisSchema.shape.code).optional(),
-});
-
 patientsRouter.post('/patients/:id/entries', (req, res) => {
   const patient = getOne(req.params.id);
   try {
-    const {description, date, specialist, diagnosisCodes, type} = req.body;
     const newEntry = {
-      id: Math.random().toString(),
-      
-    }
+      id: crypto.randomUUID().toString(),
+      ...parseNewEntry({
+        ...req.body
+      })
+    };
+    console.log(newEntry);
+    console.log(patient);
+    res.json(newEntry);
+    allPatientsData = allPatientsData.map(p => {
+      if(p.id === patient.id) {
+        return {
+          ...p,
+          entries: [
+            ...(p.entries ?? []),
+            newEntry
+          ]
+        }
+      } else {
+        return p
+      }
+    })
     
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {

@@ -15,7 +15,6 @@ const DiagnosisSchema = z.object({
 export type Diagnosis = z.infer<typeof DiagnosisSchema>;
 
 export const BaseEntrySchema = z.object({
-  id: z.string(),
   description: z.string(),
   date: z.string(),
   specialist: z.string(),
@@ -57,19 +56,13 @@ export const HospitalEntrySchema = BaseEntrySchema.extend({
   }),
 });
 
-export const EntrySchema = z.discriminatedUnion("type", [
-  HospitalEntrySchema,
-  OccupationalHealthcareEntrySchema,
-  HealthCheckEntrySchema,
-]);
-
 type HealthCheckEntry = z.infer<typeof HealthCheckEntrySchema>;
 
 type OccupationalHealthcareEntry = z.infer<typeof OccupationalHealthcareEntrySchema>;
 
 type HospitalEntry = z.infer<typeof HospitalEntrySchema>;
 
-export type Entry = HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry;
+export type Entry = (HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry) & {id:string};
 
 // Define special omit for unions
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
@@ -91,6 +84,6 @@ export interface Patient extends NewPatient {
   entries: Entry[];
 }
 
-export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;
+export type NonSensitivePatient = Omit<Patient, 'ssn'>;
 
 export type Gender = typeof Gender[keyof typeof Gender];
