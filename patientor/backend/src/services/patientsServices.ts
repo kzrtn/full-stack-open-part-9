@@ -20,7 +20,6 @@ export const getOne = (id:string):Patient => {
     return {
       ...patient,
       ...parseNewPatient(patient),
-      entries: []
     };
   } else {
     throw new Error(`Error: Patient with ID ${id} does not exist in database.`);

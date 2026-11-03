@@ -8,7 +8,7 @@ export const Gender = {
 } as const;
 
 export interface BaseEntry {
-  name: string;
+  id: string;
   description: string;
   date: string;
   specialist: string;
@@ -32,7 +32,7 @@ interface HealthCheckEntry extends BaseEntry {
 interface OccupationalHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthcare";
   employerName: string;
-  sickLeave : {
+  sickLeave?: {
     startDate: string;
     endDate: string;
   }
