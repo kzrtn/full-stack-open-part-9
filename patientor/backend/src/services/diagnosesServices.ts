@@ -1,10 +1,5 @@
 import data from '../../data/diagnoses.ts';
-
-export interface Diagnosis {
-  code: string;
-  name: string;
-  latin?: string;
-};
+import type { Diagnosis } from '../types.ts';
 
 export const allDiagnoses = (): Diagnosis[] => {
   return data;
