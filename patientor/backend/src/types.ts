@@ -53,7 +53,7 @@ export const HospitalEntrySchema = BaseEntrySchema.extend({
   discharge: z.object({
     date: z.string(),
     criteria: z.string(),
-  }),
+  }).optional(),
 });
 
 type HealthCheckEntry = z.infer<typeof HealthCheckEntrySchema>;
