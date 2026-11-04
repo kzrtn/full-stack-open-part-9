@@ -53,9 +53,7 @@ patientsRouter.post('/patients/:id/entries', (req, res) => {
         ...req.body
       })
     };
-    console.log(newEntry);
-    console.log(patient);
-    res.json(newEntry);
+    // append new entry to patient entry array
     allPatientsData = allPatientsData.map(p => {
       if(p.id === patient.id) {
         return {
@@ -68,8 +66,8 @@ patientsRouter.post('/patients/:id/entries', (req, res) => {
       } else {
         return p
       }
-    })
-    
+    });
+    res.json(newEntry);
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
       res.status(400).send({ error: error.issues });
