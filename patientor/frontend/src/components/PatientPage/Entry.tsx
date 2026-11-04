@@ -65,8 +65,12 @@ const Entry = ({ entry, diagnoses }: { entry: Entry, diagnoses: Diagnosis[] }) =
           <div>
             <Typography sx={{ fontStyle:"italic" }}>{description}</Typography>
             <Typography>Diagnose by {specialist}</Typography>
-            <Typography sx={{ fontWeight: "bold", marginTop: "0.5rem"}}>Discharge data:</Typography>
-            <Typography>{entry.discharge.date}: {entry.discharge.criteria}</Typography>
+            {entry?.discharge && (
+              <>
+                <Typography sx={{ fontWeight: "bold", marginTop: "0.5rem"}}>Discharge data:</Typography>
+                <Typography>{entry.discharge.date}: {entry.discharge.criteria}</Typography>
+              </>      
+            )}
           </div>
         </>
       );

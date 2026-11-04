@@ -1,7 +1,14 @@
+import type { AlertColor } from "@mui/material";
+
 export interface Diagnosis {
   code: string;
   name: string;
   latin?: string;
+}
+
+export interface Toast {
+  type?: AlertColor;
+  message: string;
 }
 
 export enum Gender {
