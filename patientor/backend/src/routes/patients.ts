@@ -54,20 +54,14 @@ patientsRouter.post('/patients/:id/entries', (req, res) => {
       })
     };
     // append new entry to patient entry array
-    allPatientsData = allPatientsData.map(p => {
-      if(p.id === patient.id) {
-        return {
-          ...p,
-          entries: [
-            ...(p.entries ?? []),
-            newEntry
-          ]
-        }
-      } else {
-        return p
-      }
-    });
-    res.json(newEntry);
+    const updatedPatient = {
+      ...patient,
+      entries: [
+        ...(patient.entries ?? []),
+        newEntry
+      ]
+    };
+    res.json(updatedPatient);
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
       res.status(400).send({ error: error.issues });
