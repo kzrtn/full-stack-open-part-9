@@ -13,7 +13,8 @@ const PatientDetails = ({ patientId, diagnoses }: { patientId: string | undefine
 
   if (patientId && !patient) {
     axios.get(`${apiBaseUrl}/patients/${patientId}`).then(res => {
-      setPatient(res.data)
+      setPatient(res.data);
+      console.log(res.data);
     });
   }
 
@@ -27,7 +28,7 @@ const PatientDetails = ({ patientId, diagnoses }: { patientId: string | undefine
         <div><Typography>ssn: {patient.ssn}</Typography></div>
         <div><Typography>occupation: {patient.occupation}</Typography></div>
         <div><Typography>date of birth: {patient.dateOfBirth}</Typography></div>
-        {patientId && <EntryForm patientId={patientId} setPatient={setPatient} />}
+        {patientId && <EntryForm patientId={patientId} patient={patient} setPatient={setPatient} />}
         <Typography sx={{ marginTop: "1.5rem", fontWeight: "bold" }}>entries</Typography>
         {patient.entries.map(entry => (
           <Entry entry={entry} key={entry.id} diagnoses={diagnoses} />

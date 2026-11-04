@@ -21,7 +21,6 @@ const App = () => {
     const fetchPatientList = async () => {
       const patients = await patientService.getAll();
       setPatients(patients);
-      console.log(patients)
     };
 
     const fetchDiagnosesList = async () => {

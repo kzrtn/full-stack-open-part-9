@@ -46,6 +46,7 @@ patientsRouter.post('/patients', (req, res) => {
 
 patientsRouter.post('/patients/:id/entries', (req, res) => {
   const patient = getOne(req.params.id);
+  if (!patient) throw new Error(`Patient with id ${req.params.id} does not exist.`);
   try {
     const newEntry = {
       id: crypto.randomUUID().toString(),
@@ -53,15 +54,7 @@ patientsRouter.post('/patients/:id/entries', (req, res) => {
         ...req.body
       })
     };
-    // append new entry to patient entry array
-    const updatedPatient = {
-      ...patient,
-      entries: [
-        ...(patient.entries ?? []),
-        newEntry
-      ]
-    };
-    res.json(updatedPatient);
+    res.json(newEntry);
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
       res.status(400).send({ error: error.issues });
