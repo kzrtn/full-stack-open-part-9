@@ -163,7 +163,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
           </FormControl>
           </div>
           <div>
-            <TextField required fullWidth id="date" label="Date" value={date} margin="dense" onChange={e => setDate(e.target.value)} />
+            <TextField required fullWidth id="date" type="date" label="Date" value={date} margin="dense" onChange={e => setDate(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} />
           </div>
           <div>
             <TextField required fullWidth id="description" label="Description" value={description} margin="dense" onChange={e => setDescription(e.target.value)} />
@@ -178,7 +178,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
             <>
               <Typography sx={{ fontWeight: "bold", marginTop: "1rem" }}>Discharge data</Typography>
               <div>
-                <TextField required fullWidth id="discharge-date" label="Discharge Date" value={dischargeDate} margin="dense" onChange={e => setDischargeDate(e.target.value)} />
+                <TextField required fullWidth type="date" id="discharge-date" label="Discharge Date" value={dischargeDate} margin="dense" onChange={e => setDischargeDate(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} />
               </div>
               <div>
                 <TextField required fullWidth id="discharge-criteria" label="Discharge Criteria" value={dischargeCriteria} margin="dense" onChange={e => setDischargeCriteria(e.target.value)} />
@@ -212,10 +212,10 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
                 <TextField required fullWidth id="employer" label="Employer Name" value={employer} margin="dense" onChange={e => setEmployer(e.target.value)} />
               </div>
               <div>
-                <TextField fullWidth id="sick-start-date" label="Sick Start Date" value={startSick} margin="dense" onChange={e => setStartSick(e.target.value)} />
+                <TextField fullWidth id="sick-start-date" type="date" label="Sick Start Date" value={startSick} margin="dense" onChange={e => setStartSick(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} />
               </div>
               <div>
-                <TextField fullWidth id="sick-end-date" label="Sick End Date" value={endSick} margin="dense" onChange={e => setEndSick(e.target.value)} />
+                <TextField fullWidth id="sick-end-date" type="date" label="Sick End Date" value={endSick} margin="dense" onChange={e => setEndSick(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} />
               </div>
             </>
           )}
