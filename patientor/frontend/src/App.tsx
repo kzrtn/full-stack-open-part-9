@@ -3,6 +3,10 @@ import axios from "axios";
 import { Route, Link, Routes, useMatch } from "react-router-dom";
 import { Button, Divider, Container, Typography } from '@mui/material';
 
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/en-gb';
+
 import { apiBaseUrl } from "./constants";
 import { Diagnosis, Patient } from "./types";
 
@@ -37,6 +41,7 @@ const App = () => {
   
   return (
     <div className="App">
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <Container>
           <Typography variant="h3" sx={{ marginBottom: "0.5em" }}>
             Patientor
@@ -52,6 +57,7 @@ const App = () => {
             }/>
           </Routes>
         </Container>
+      </LocalizationProvider>
     </div>
   );
 };
