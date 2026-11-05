@@ -1,12 +1,10 @@
 import { AlertColor, Box, Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import type { Patient, Toast } from "../../types";
 import { useState } from "react"
 
 import patientServices from "../../services/patients";
 import Notification from "./Notification";
-import { type Dayjs } from "dayjs";
 import MultiSelectChip from "./MultiSelectChip";
 
 interface propTypes {
@@ -22,16 +20,16 @@ interface propTypes {
 
 const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
   const [type, setType] = useState("HealthCheck");
-  const [date, setDate] = useState<Dayjs | null>(null);
+  const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [specialist, setSpecialist] = useState("");
   const [hcRating, setHcRating] = useState("")
   const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
-  const [dischargeDate, setDischargeDate] = useState<Dayjs | null>();
+  const [dischargeDate, setDischargeDate] = useState("");
   const [dischargeCriteria, setDischargeCriteria] = useState("");
   const [employer, setEmployer] = useState("");
-  const [startSick, setStartSick] = useState<Dayjs | null>();
-  const [endSick, setEndSick] = useState<Dayjs | null>();
+  const [startSick, setStartSick] = useState("");
+  const [endSick, setEndSick] = useState("");
 
   const [toast, setToast] = useState<Toast>({
     type: undefined,
@@ -40,16 +38,16 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
 
   const resetForm = () => {
     setType("HealthCheck");
-    setDate(null);
+    setDate("");
     setDescription("");
     setSpecialist("");
     setHcRating("");
     setDiagnosisCodes([]);
-    setDischargeDate(null);
+    setDischargeDate("");
     setDischargeCriteria("");
     setEmployer("");
-    setStartSick(null);
-    setEndSick(null);
+    setStartSick("");
+    setEndSick("");
   }
 
   const submitNewEntry = async () => {
@@ -57,7 +55,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
       const baseEntry = {
         patientId,
         type,
-        date: parseDate(date?.format('YYYY-MM-DD') ?? ""),
+        date: parseDate(date),
         description: description,
         specialist: specialist,
         diagnosisCodes,
@@ -68,7 +66,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
           newEntry = {
             ...baseEntry,
             discharge: {
-              date: parseDate(dischargeDate?.format('YYYY-MM-DD') ?? ""),
+              date: parseDate(dischargeDate),
               criteria: dischargeCriteria
             }
           };
@@ -85,8 +83,8 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
             employerName: employer,
             ...(startSick || endSick
             ? { sickLeave: {
-                  startDate: parseDate(startSick?.format('YYYY-MM-DD') ?? ""),
-                  endDate: parseDate(endSick?.format('YYYY-MM-DD') ?? "")
+                  startDate: parseDate(startSick),
+                  endDate: parseDate(endSick)
                 }
               }
             : {})
@@ -165,7 +163,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
           </FormControl>
           </div>
           <div>
-            <DatePicker label="Date" value={date} onChange={(newDate) => setDate(newDate)} slotProps={{textField: {required: true,fullWidth: true}}} />
+            <TextField required fullWidth id="date" label="Date" value={date} margin="dense" onChange={e => setDate(e.target.value)} />
           </div>
           <div>
             <TextField required fullWidth id="description" label="Description" value={description} margin="dense" onChange={e => setDescription(e.target.value)} />
@@ -180,7 +178,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
             <>
               <Typography sx={{ fontWeight: "bold", marginTop: "1rem" }}>Discharge data</Typography>
               <div>
-                <DatePicker label="Discharge Date" value={dischargeDate} onChange={(newDate) => setDischargeDate(newDate)} slotProps={{textField: {required: true,fullWidth: true}}} />
+                <TextField required fullWidth id="discharge-date" label="Discharge Date" value={dischargeDate} margin="dense" onChange={e => setDischargeDate(e.target.value)} />
               </div>
               <div>
                 <TextField required fullWidth id="discharge-criteria" label="Discharge Criteria" value={dischargeCriteria} margin="dense" onChange={e => setDischargeCriteria(e.target.value)} />
@@ -214,10 +212,10 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
                 <TextField required fullWidth id="employer" label="Employer Name" value={employer} margin="dense" onChange={e => setEmployer(e.target.value)} />
               </div>
               <div>
-                <DatePicker label="Sick Start Date" value={startSick} onChange={(newDate) => setStartSick(newDate)} sx={{marginTop: "0.5rem"}} slotProps={{textField: {required: true,fullWidth: true}}} />
+                <TextField fullWidth id="sick-start-date" label="Sick Start Date" value={startSick} margin="dense" onChange={e => setStartSick(e.target.value)} />
               </div>
               <div>
-                <DatePicker label="Sick End Date" value={endSick} onChange={(newDate) => setEndSick(newDate)} sx={{marginTop: "0.5rem"}} slotProps={{textField: {required: true,fullWidth: true}}} />
+                <TextField fullWidth id="sick-end-date" label="Sick End Date" value={endSick} margin="dense" onChange={e => setEndSick(e.target.value)} />
               </div>
             </>
           )}
