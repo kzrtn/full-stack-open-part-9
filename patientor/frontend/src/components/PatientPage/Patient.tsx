@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import type { Diagnosis, Patient } from "../../types";
 import { apiBaseUrl } from "../../constants";
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import Entry from "./Entry";
@@ -10,6 +10,7 @@ import EntryForm from "./EntryForm";
 
 const PatientDetails = ({ patientId, diagnoses }: { patientId: string | undefined, diagnoses: Diagnosis[]}) => {
   const [patient, setPatient] = useState<Patient | null>(null)
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   if (patientId && !patient) {
     axios.get(`${apiBaseUrl}/patients/${patientId}`).then(res => {
@@ -27,7 +28,10 @@ const PatientDetails = ({ patientId, diagnoses }: { patientId: string | undefine
         <div><Typography>ssn: {patient.ssn}</Typography></div>
         <div><Typography>occupation: {patient.occupation}</Typography></div>
         <div><Typography>date of birth: {patient.dateOfBirth}</Typography></div>
-        {patientId && <EntryForm patientId={patientId} patient={patient} setPatient={setPatient} diagnoses={diagnoses} />}
+        <Button variant="outlined" sx={{marginTop: "0.5rem"}} onClick={() => setShowForm((prev) => !prev)}>
+          {showForm ? "Close Form" : "Add New Entry"}
+        </Button>
+        {patientId && showForm && (<EntryForm patientId={patientId} patient={patient} setPatient={setPatient} diagnoses={diagnoses} />)}
         <Typography sx={{ marginTop: "1.5rem", fontWeight: "bold" }}>entries</Typography>
         {patient.entries.map(entry => (
           <Entry entry={entry} key={entry.id} diagnoses={diagnoses} />
