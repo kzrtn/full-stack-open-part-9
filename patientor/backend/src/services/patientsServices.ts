@@ -24,4 +24,4 @@ export const getOne = (id:string):Patient => {
   } else {
     throw new Error(`Error: Patient with ID ${id} does not exist in database.`);
   }
-}
+};

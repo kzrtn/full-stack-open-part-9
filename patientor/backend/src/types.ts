@@ -35,7 +35,7 @@ type HealthCheckRating = typeof HealthCheckRating[keyof typeof HealthCheckRating
 export const HealthCheckEntrySchema = BaseEntrySchema.extend({
   type: z.literal("HealthCheck"),
   healthCheckRating: z.enum(HealthCheckRating)
-})
+});
 
 export const OccupationalHealthcareEntrySchema = BaseEntrySchema.extend({
   type: z.literal("OccupationalHealthcare"),

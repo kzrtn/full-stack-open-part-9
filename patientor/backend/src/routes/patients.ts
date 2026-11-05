@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { allPatients, getOne } from '../services/patientsServices.ts';
 import { parseNewEntry, parseNewPatient } from '../utils/utils.ts';
 const patientsRouter = express.Router();
-let allPatientsData = allPatients();
+const allPatientsData = allPatients();
 
 patientsRouter.get('/ping', (_req, res) => {
   console.log('someone pinged here');
@@ -17,11 +17,21 @@ patientsRouter.get('/patients', (_req, res) => {
 patientsRouter.get('/patients/:id', (req, res) => {
   const patient = getOne(req.params.id);
   res.json(patient);
-})
+});
 
-patientsRouter.post('/patients', (req, res) => {
+interface patientRequest {
+  body: {
+    name: string,
+    occupation: string,
+    gender: string,
+    ssn: string,
+    dateOfBirth: string
+  }
+}
+
+patientsRouter.post('/patients', (req:patientRequest, res) => {
   try {
-    const {name, occupation, gender, ssn, dateOfBirth} = req.body;
+    const {name, occupation, gender, ssn, dateOfBirth} = (req.body);
     const newPatient = {
       id: crypto.randomUUID().toString(),
       entries: [],
