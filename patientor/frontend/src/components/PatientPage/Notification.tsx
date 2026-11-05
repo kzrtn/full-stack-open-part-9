@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const StyledAlert = styled(Alert)`
   margin-top: 1rem;
-`
+`;
 
 const Notification = ({ toast }: {toast: Toast}) => {
   /*
@@ -37,7 +37,7 @@ const Notification = ({ toast }: {toast: Toast}) => {
     <StyledAlert severity={toast.type}>
       {toast.message}
     </StyledAlert>
-  )
-}
+  );
+};
 
-export default Notification
+export default Notification;

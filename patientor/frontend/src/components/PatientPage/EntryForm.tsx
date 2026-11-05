@@ -1,7 +1,7 @@
 import { AlertColor, Box, Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 
-import type { Patient, Toast } from "../../types";
-import { useState } from "react"
+import type { HealthCheckRating, NewEntry, Patient, Toast } from "../../types";
+import { useState } from "react";
 
 import patientServices from "../../services/patients";
 import Notification from "./Notification";
@@ -23,7 +23,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [specialist, setSpecialist] = useState("");
-  const [hcRating, setHcRating] = useState("0")
+  const [hcRating, setHcRating] = useState("0");
   const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
   const [dischargeDate, setDischargeDate] = useState("");
   const [dischargeCriteria, setDischargeCriteria] = useState("");
@@ -41,30 +41,30 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
     setDate("");
     setDescription("");
     setSpecialist("");
-    setHcRating("");
+    setHcRating("0");
     setDiagnosisCodes([]);
     setDischargeDate("");
     setDischargeCriteria("");
     setEmployer("");
     setStartSick("");
     setEndSick("");
-  }
+  };
 
   const submitNewEntry = async () => {
     try {
       const baseEntry = {
         patientId,
-        type,
         date: parseDate(date),
         description: description,
         specialist: specialist,
         diagnosisCodes,
       };
-      let newEntry;
+      let newEntry: NewEntry;
       switch (type) {
         case "Hospital":
           newEntry = {
             ...baseEntry,
+            type: "Hospital",
             discharge: {
               date: parseDate(dischargeDate),
               criteria: dischargeCriteria
@@ -74,12 +74,14 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
         case "HealthCheck":
           newEntry = {
             ...baseEntry,
+            type: "HealthCheck",
             healthCheckRating: parseHcRating(hcRating),
           };
           break;
         case "OccupationalHealthcare":
           newEntry = {
             ...baseEntry,
+            type: "OccupationalHealthcare",
             employerName: employer,
             ...(startSick || endSick
             ? { sickLeave: {
@@ -93,7 +95,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
         default:
           showNotification('error', `invalid entry type: ${type}`);
           throw new Error(`invalid entry type: ${type}`);
-      };
+      }
       const returnedEntry = await patientServices.createEntry(newEntry);
       const newPatient = {
         ...patient,
@@ -101,7 +103,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
           ...patient.entries,
           returnedEntry,
         ]
-      }
+      };
       setPatient(newPatient);
       resetForm();
     } catch (error) {
@@ -118,16 +120,16 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
       setToast({
         type: undefined,
         message: ''
-      })
+      });
     }, 5000);
   };
 
-  const parseHcRating = (hcRating: string):number => {
+  const parseHcRating = (hcRating: string):HealthCheckRating => {
     if (!/^[0-3]$/.test(hcRating)) {
       showNotification('error', `invalid healthcheck rating: ${hcRating}`);
       throw new Error (`invalid healthcheck rating: ${hcRating}`);
     }
-    return Number(hcRating);
+    return Number(hcRating) as HealthCheckRating;
   };
 
   const parseDate = (date: string):string => {
@@ -225,9 +227,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
       </CardContent>
     </Card>
     </>
-  )
-}
+  );
+};
 
-
-
-export default EntryForm
+export default EntryForm;

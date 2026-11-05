@@ -42,7 +42,7 @@ const HealthCheckRating = {
   CriticalRisk: 3,
 } as const;
 
-type HealthCheckRating = typeof HealthCheckRating[keyof typeof HealthCheckRating];
+export type HealthCheckRating = typeof HealthCheckRating[keyof typeof HealthCheckRating];
 
 interface HealthCheckEntry extends BaseEntry {
   type: "HealthCheck";
@@ -67,5 +67,9 @@ interface HospitalEntry extends BaseEntry {
 }
 
 export type Entry = HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry;
+
+type UnionOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+
+export type NewEntry = UnionOmit<Entry, "id"> & { patientId: string };
 
 export type PatientFormValues = Omit<Patient, "id" | "entries">;

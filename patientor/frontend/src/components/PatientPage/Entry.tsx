@@ -11,15 +11,15 @@ const renderCodes = (codes:string[], diagnoses: Diagnosis[]) => {
     return {
       code,
       diagnosis
-    }
-  })
+    };
+  });
   return (
     <ul>
       {codeList.map(code => (
         <li key={code.code}><Typography>{code.code} {code.diagnosis?.name}</Typography></li>
       ))}
     </ul>
-  )
+  );
 };
 
 const Entry = ({ entry, diagnoses }: { entry: Entry, diagnoses: Diagnosis[] }) => {
@@ -32,16 +32,16 @@ const Entry = ({ entry, diagnoses }: { entry: Entry, diagnoses: Diagnosis[] }) =
       let ratingIcon = (<></>);
       switch (entry.healthCheckRating) {
         case 0:
-          ratingIcon = (<Favorite sx={{ color:"green" }}/>)
+          ratingIcon = (<Favorite sx={{ color:"green" }}/>);
           break;
         case 1:
-          ratingIcon = (<Favorite sx={{ color:"yellow" }}/>)
+          ratingIcon = (<Favorite sx={{ color:"yellow" }}/>);
           break;
         case 2:
-          ratingIcon = (<Favorite sx={{ color:"orange" }}/>)
+          ratingIcon = (<Favorite sx={{ color:"orange" }}/>);
           break;
         case 3:
-          ratingIcon = (<Favorite sx={{ color:"red" }}/>)
+          ratingIcon = (<Favorite sx={{ color:"red" }}/>);
           break;
         default:
           throw new Error(`Unknown healthCheckRating found ${entry.healthCheckRating}`);

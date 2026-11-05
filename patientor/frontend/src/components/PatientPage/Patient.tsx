@@ -9,7 +9,7 @@ import Entry from "./Entry";
 import EntryForm from "./EntryForm";
 
 const PatientDetails = ({ patientId, diagnoses }: { patientId: string | undefined, diagnoses: Diagnosis[]}) => {
-  const [patient, setPatient] = useState<Patient | null>(null)
+  const [patient, setPatient] = useState<Patient | null>(null);
   const [showForm, setShowForm] = useState<boolean>(false);
 
   if (patientId && !patient) {
