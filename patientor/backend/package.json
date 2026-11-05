@@ -10,7 +10,7 @@
     "tsc": "tsc",
     "lint": "eslint .",
     "dev": "concurrently \"tsc --watch\" \"cd src && node --watch --experimental-transform-types index.ts\"",
-    "start": "node --experimental-transform-types index.ts",
+    "start": "node --experimental-transform-types src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
