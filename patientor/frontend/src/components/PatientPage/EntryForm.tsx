@@ -23,7 +23,7 @@ const EntryForm = ({patientId, patient, setPatient, diagnoses}: propTypes) => {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [specialist, setSpecialist] = useState("");
-  const [hcRating, setHcRating] = useState("")
+  const [hcRating, setHcRating] = useState("0")
   const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
   const [dischargeDate, setDischargeDate] = useState("");
   const [dischargeCriteria, setDischargeCriteria] = useState("");
