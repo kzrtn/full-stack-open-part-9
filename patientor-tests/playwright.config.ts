@@ -18,4 +18,11 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+  webServer: {
+    command: 'npm run dev',
+    cwd: '../patientor/',
+    url: 'http://localhost:5173/api/ping',
+    reuseExistingServer: true,
+    timeout: 60_000,
+  },
 });
